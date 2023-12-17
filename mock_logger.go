@@ -2,9 +2,6 @@ package recoverich
 
 import "strings"
 
-// Logger interface for mocking the logger
-//type Logger interface{}
-
 // MockLogger is a simple implementation of the Logger interface for testing
 type MockLogger struct {
 	logs []string

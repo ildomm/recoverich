@@ -10,6 +10,8 @@ import (
 	"unsafe"
 )
 
+// RecoverWithContextValues recovers from a panic and logs the error and stack trace.
+// It also logs the context values.
 func RecoverWithContextValues(ctx context.Context) {
 	if err := recover(); err != nil {
 
@@ -37,7 +39,7 @@ func dumpValues(ctx context.Context) []string {
 }
 
 func iterateOverParents(ctx context.Context) []string {
-	trackedValues := make([]string, 0)
+	values := make([]string, 0)
 
 	for {
 		parent := getParentContext(ctx)
@@ -46,13 +48,13 @@ func iterateOverParents(ctx context.Context) []string {
 			break
 		}
 
-		tracked := extractValuesFromContext(ctx)
-		trackedValues = append(trackedValues, tracked...)
+		_values := extractValuesFromContext(ctx)
+		values = append(values, _values...)
 
 		ctx = parent
 	}
 
-	return trackedValues
+	return values
 }
 
 func getParentContext(ctx context.Context) context.Context {
@@ -71,7 +73,7 @@ func getParentContext(ctx context.Context) context.Context {
 
 func extractValuesFromContext(ctx context.Context) []string {
 
-	trackedValues := make([]string, 0)
+	values := make([]string, 0)
 	ctxValue := reflect.ValueOf(ctx)
 
 	if ctxValue.Kind() == reflect.Ptr && !ctxValue.IsNil() {
@@ -85,12 +87,12 @@ func extractValuesFromContext(ctx context.Context) []string {
 
 			if keyField.IsValid() && valueField.IsValid() {
 				tracked := fmt.Sprintf("Key: %v, Type: %v, Value: %v\n", keyField, reflect.TypeOf(valueField.Interface()), valueField)
-				trackedValues = append(trackedValues, tracked)
+				values = append(values, tracked)
 			}
 
-			return trackedValues
+			return values
 		}
 	}
 
-	return trackedValues
+	return values
 }

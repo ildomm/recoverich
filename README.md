@@ -1,6 +1,6 @@
 <!-- README.md -->
 
-# Recoverich Library
+# Recoverich Module
 
 The `recoverich` library provides functions to recover from panics, log errors, and track values during a panic situation. This README provides an explanation of each public method along with examples of how to use them.
 
