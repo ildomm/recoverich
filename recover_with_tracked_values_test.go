@@ -14,7 +14,7 @@ func TestRecoverWithTrackedValues(t *testing.T) {
 	// Replace the default logger with the mock logger
 	log.SetOutput(mockLogger)
 
-	// Setup fake object instance
+	// Setup object instance
 	type Car struct {
 		Color string
 	}
