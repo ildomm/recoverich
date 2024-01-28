@@ -38,7 +38,7 @@ jobs:
         repo: gotestfmt
         
     - name: Run tests
-      run: sudo go test -race -json -v -coverprofile=coverage.json ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+      run: sudo go test -race -json -v -coverprofile=cover.out ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 
     - name: check test coverage
       uses: vladopajic/go-test-coverage@v2
