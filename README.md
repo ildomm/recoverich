@@ -1,4 +1,5 @@
 <!-- README.md -->
+![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/main/coverage.svg)
 
 # Recoverich Module
 
@@ -6,7 +7,7 @@ The `recoverich` library provides functions to recover from panics, log errors, 
 
 ## `Recover()`
 
-This is the most basic version of the recover function. It recovers from a panic, logs the error, and prints a stack trace.
+This is the most basic version of the recovery function. It recovers from a panic, logs the error, and prints a stack trace.
 
 ### Example:
 
