@@ -1,6 +1,5 @@
 <!-- README.md -->
 [![test](https://github.com/ildomm/recoverich/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/ildomm/recoverich/actions/workflows/test.yml)
-[![lint](https://github.com/ildomm/recoverich/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/ildomm/recoverich/actions/workflows/lint.yml)
 [![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/main/coverage.svg)](/.github/.testcoverage.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ildomm/recoverich?cache=v1)](https://goreportcard.com/report/github.com/ildomm/recoverich)
 
