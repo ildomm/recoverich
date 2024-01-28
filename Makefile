@@ -32,5 +32,5 @@ coverage-core: deps
 
 .PHONY: coverage-report
 coverage-report: deps coverage-core
-	go tool cover -html=build/cover_filtered.out -o build/coverage.html
+	go tool cover -html=build/cover.out -o build/coverage.html
 	echo "** Coverage is available in build/coverage.html **"
