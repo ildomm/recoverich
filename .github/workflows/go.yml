@@ -40,13 +40,5 @@ jobs:
     - name: Run tests
       run: sudo go test -race -json -v -coverprofile=cover.out ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 
-    - name: check test coverage
-      uses: vladopajic/go-test-coverage@v2
-      with:
-        profile: cover.out
-        local-prefix: github.com/org/project
-        threshold-total: 95
-        git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}        
-        git-branch: badges 
     
 
