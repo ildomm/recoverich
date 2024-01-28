@@ -1,5 +1,19 @@
 <!-- README.md -->
 ![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/main/coverage.svg)
+![coverage](https://raw.githubusercontent.com/org/project/badges/.badges/main/coverage.svg)
+![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/badge-examples/coverage-0.svg)
+![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/badge-examples/coverage-50.svg)
+![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/badge-examples/coverage-70.svg)
+![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/badge-examples/coverage-80.svg)
+![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/badge-examples/coverage-90.svg)
+![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/badge-examples/coverage-100.svg)
+
+
+[![test](https://github.com/ildomm/recoverich/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/ildomm/recoverich/actions/workflows/test.yml)
+[![action-test](https://github.com/ildomm/recoverich/actions/workflows/action-test.yml/badge.svg?branch=main)](https://github.com/ildomm/recoverich/actions/workflows/action-test.yml)
+[![lint](https://github.com/ildomm/recoverich/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/ildomm/recoverich/actions/workflows/lint.yml)
+[![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/main/coverage.svg)](/.github/.testcoverage.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ildomm/recoverich?cache=v1)](https://goreportcard.com/report/github.com/ildomm/recoverich)
 
 # Recoverich Module
 
