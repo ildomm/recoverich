@@ -1,13 +1,10 @@
-name: Go
-
+name: test_on_pr
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
