@@ -3,15 +3,22 @@
 [![coverage](https://raw.githubusercontent.com/ildomm/recoverich/badges/.badges/main/coverage.svg)](/.github/.testcoverage.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ildomm/recoverich?cache=v1)](https://goreportcard.com/report/github.com/ildomm/recoverich)
 
-# Recoverich Module
+
+## Install
+
+```bash
+go get -u github.com/ildomm/recoverich
+```
+
+## Recoverich Module
 
 The `recoverich` library provides functions to recover from panics, log errors, and track values during a panic situation. This README provides an explanation of each public method along with examples of how to use them.
 
-## `Recover()`
+### `Recover()`
 
 This is the most basic version of the recovery function. It recovers from a panic, logs the error, and prints a stack trace.
 
-### Example:
+#### Example:
 
 ```go
 package main
@@ -28,11 +35,11 @@ func main() {
 }
 ```
 
-## `RecoverWithTrackedValues(values ...interface{})`
+### `RecoverWithTrackedValues(values ...interface{})`
 
 This function enhances the basic recovery by allowing you to log additional tracked values along with the error and stack trace.
 
-### Example:
+#### Example:
 
 ```go
 package main
@@ -70,10 +77,10 @@ int_1: 42
 
 ```
 
-## `RecoverWithContextValues(ctx context.Context)`
+### `RecoverWithContextValues(ctx context.Context)`
 This function is designed for use with the context package. It recovers from a panic, logs the error and stack trace, and also logs values associated with the context.
 
-### Example:
+#### Example:
 ```go
 package main
 
