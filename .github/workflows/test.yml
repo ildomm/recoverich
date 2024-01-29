@@ -1,4 +1,4 @@
-name: test_on_push
+name: test
 on: [push]
 permissions:
   contents: write
