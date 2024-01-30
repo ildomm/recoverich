@@ -1,11 +1,9 @@
 package recoverich
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"reflect"
-	"runtime"
 )
 
 // RecoverWithTrackedValues recovers from a panic and logs the error and stack trace.
@@ -15,24 +13,22 @@ import (
 func RecoverWithTrackedValues(values ...any) {
 	if err := recover(); err != nil {
 
-		stackTrace := make([]byte, stackTraceMaxSize)
-		stackTrace = stackTrace[:runtime.Stack(stackTrace, false)]
+		print(err)
 
-		switch x := err.(type) {
-		case string:
-			err = errors.New(x)
-		default:
-			err = fmt.Errorf("unknown panic: %w", x.(error))
-		}
-
-		log.Printf("ERROR: %v", err)
-		log.Printf("ERROR: Stacktrace dump ***\n%s\n*** end\n", stackTrace)
-
-		valuesMap := make(map[string]interface{})
-		for index, trackedRecord := range values {
-			key := fmt.Sprintf("%s_%d", reflect.TypeOf(trackedRecord).String(), index)
-			valuesMap[key] = fmt.Sprintf("%v", trackedRecord)
-		}
-		log.Printf("ERROR: Tracked values dump ***\n%v\n*** end\n", valuesMap)
+		// Pile the values formatted
+		log.Print("Tracked values ***\n")
+		printPile(gatherTrackedValues(values))
+		log.Print("***")
 	}
+}
+
+// gatherTrackedValues iterates over the context and extracts the tracked values
+func gatherTrackedValues(values ...interface{}) []string {
+	v := make([]string, 0)
+
+	for i, t := range values[0].([]interface{}) {
+		f := fmt.Sprintf("Name: %v, Type: %v, Value: %v", i, reflect.TypeOf(t).String(), t)
+		v = append(v, f)
+	}
+	return v
 }

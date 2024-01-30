@@ -58,23 +58,27 @@ func main() {
 
 Results in the following log output:
 ```
-ERROR: Something went wrong!
-ERROR: Stacktrace dump ***
-goroutine 1 [running]:
-runtime/debug.Stack(0xc000010150, 0x10, 0x40)
-	/usr/local/go/src/runtime/debug/stack.go:24 +0xa2
-github.com/ildommm/recoverich.RecoverWithTrackedValues(0xc000010150, 0x10, 0x40)
-	/path/to/your/code/recoverich.go:24 +0x11d
-panic(0x4ba880, 0xc000010160)
-	/usr/local/go/src/runtime/panic.go:965 +0x1b9
-main.main()
-	/path/to/your/code/main.go:8 +0x95
-*** end
-ERROR: Tracked values dump ***
-string_0: Track this value
-int_1: 42
-*** end
-
+ERROR 2024/01/30 08:53:42 Recovered from panic: Something went wrong!
+ERROR 2024/01/30 08:53:42 Stacktrace ***
+ *errors.errorString Something went wrong!
+/recoverich/recover.go:11 (0x104bec81c)
+        print: e := errors.Wrap(err, 0)
+/recoverich/recover_with_tracked_values.go:18 (0x104bec98c)
+        RecoverWithTrackedValues: print(err)
+/golang/1.21.4/go/src/runtime/panic.go:920 (0x104b6fdc4)
+        gopanic: d.fn()
+/recoverich/cmd/main.go:14 (0x104becea8)
+        main: panic("Something went wrong!")
+/golang/1.21.4/go/src/runtime/proc.go:267 (0x104b72834)
+        main: fn()
+/golang/1.21.4/go/src/runtime/asm_arm64.s:1197 (0x104b9d544)
+        goexit: MOVD    R0, R0  // NOP
+ 
+*** 
+ERROR 2024/01/30 08:53:42 Tracked values ***
+ERROR 2024/01/30 08:53:42 Name: 0, Type: string, Value: Track this value 
+ERROR 2024/01/30 08:53:42 Name: 1, Type: int, Value: 42 
+ERROR 2024/01/30 08:53:42 ***
 ```
 
 ### `RecoverWithContextValues(ctx context.Context)`
@@ -103,22 +107,26 @@ Note: Ensure that your context values are compatible with reflection, and the Ke
 
 Results in the following log output:
 ```
-ERROR: Something went wrong!
-ERROR: Stacktrace dump ***
-goroutine 1 [running]:
-runtime/debug.Stack(0xc000010150, 0x10, 0x40)
-	/usr/local/go/src/runtime/debug/stack.go:24 +0xa2
-github.com/ildommm/recoverich.RecoverWithContextValues(0xc000010150, 0x10, 0x40)
-	/path/to/your/code/recoverich.go:22 +0x11d
-panic(0x4ba880, 0xc000010160)
-	/usr/local/go/src/runtime/panic.go:965 +0x1b9
-main.main()
-	/path/to/your/code/main.go:11 +0x95
-*** end
-ERROR: Context values dump ***
-Key: "exampleKey", Type: string, Value: exampleValue
-*** end
-
+ERROR 2024/01/30 09:26:26 Recovered from panic: Something went wrong!
+ERROR 2024/01/30 09:26:26 Stacktrace ***
+ *errors.errorString Something went wrong!
+/recoverich/recover.go:11 (0x1045f957c)
+        print: e := errors.Wrap(err, 0)
+/recoverich/recover_with_context_values.go:16 (0x1045f9844)
+        RecoverWithContextValues: print(err)
+/golang/1.21.4/go/src/runtime/panic.go:920 (0x1045782b4)
+        gopanic: d.fn()
+/recoverich/cmd/main.go:24 (0x1045fa4fc)
+        main: panic("Something went wrong!")
+/golang/1.21.4/go/src/runtime/proc.go:267 (0x10457ad24)
+        main: fn()
+/golang/1.21.4/go/src/runtime/asm_arm64.s:1197 (0x1045a5cc4)
+        goexit: MOVD    R0, R0  // NOP
+ 
+*** 
+ERROR 2024/01/30 09:26:26 Context values ***
+ERROR 2024/01/30 09:26:26 Name: exampleKey, Type: string, Value: exampleValue 
+ERROR 2024/01/30 09:26:26 ***
 ```
 
 Feel free to explore and integrate these functions into your projects to enhance error recovery and debugging capabilities.

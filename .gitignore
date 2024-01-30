@@ -7,3 +7,4 @@ build/
 *.log
 .idea/*
 .run/*
+main.go
