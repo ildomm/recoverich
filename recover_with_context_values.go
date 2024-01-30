@@ -2,11 +2,9 @@ package recoverich
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log"
 	"reflect"
-	"runtime"
 	"unsafe"
 )
 
@@ -15,40 +13,33 @@ import (
 func RecoverWithContextValues(ctx context.Context) {
 	if err := recover(); err != nil {
 
-		const size = 64 << 10
-		stackTrace := make([]byte, size)
-		stackTrace = stackTrace[:runtime.Stack(stackTrace, false)]
+		print(err)
 
-		switch x := err.(type) {
-		case string:
-			err = errors.New(x)
-		default:
-			err = fmt.Errorf("unknown panic: %w", x.(error))
-		}
-
-		log.Printf("ERROR: %v", err)
-		log.Printf("ERROR: Stacktrace dump ***\n%s\n*** end\n", stackTrace)
-
-		values := dumpValues(ctx)
-		log.Printf("ERROR: Context values dump ***\n%v\n*** end\n", values)
+		// Pile the values formatted
+		log.Print("Context values ***\n")
+		printPile(gatherContextValues(ctx))
+		log.Print("***")
 	}
 }
 
-func dumpValues(ctx context.Context) []string {
-	return iterateOverParents(ctx)
+// gatherContextValues iterates over the context and extracts the tracked values
+func gatherContextValues(ctx context.Context) []string {
+	return gatherParentContextValues(ctx)
 }
 
-func iterateOverParents(ctx context.Context) []string {
+// gatherParentContextValues iterates over the context and extracts the tracked values
+// from the context and its parents
+func gatherParentContextValues(ctx context.Context) []string {
 	values := make([]string, 0)
 
 	for {
-		parent := getParentContext(ctx)
+		parent := parentContext(ctx)
 
 		if parent == nil {
 			break
 		}
 
-		_values := extractValuesFromContext(ctx)
+		_values := extractContextValues(ctx)
 		values = append(values, _values...)
 
 		ctx = parent
@@ -57,7 +48,8 @@ func iterateOverParents(ctx context.Context) []string {
 	return values
 }
 
-func getParentContext(ctx context.Context) context.Context {
+// parentContext returns the parent context
+func parentContext(ctx context.Context) context.Context {
 	ctxValue := reflect.ValueOf(ctx)
 	if ctxValue.Kind() == reflect.Ptr && !ctxValue.IsNil() {
 		elemValue := ctxValue.Elem()
@@ -71,8 +63,8 @@ func getParentContext(ctx context.Context) context.Context {
 	return nil
 }
 
-func extractValuesFromContext(ctx context.Context) []string {
-
+// extractContextValues extracts the tracked values from the context
+func extractContextValues(ctx context.Context) []string {
 	values := make([]string, 0)
 	ctxValue := reflect.ValueOf(ctx)
 
@@ -86,7 +78,7 @@ func extractValuesFromContext(ctx context.Context) []string {
 			valueField = reflect.NewAt(valueField.Type(), unsafe.Pointer(valueField.UnsafeAddr())).Elem()
 
 			if keyField.IsValid() && valueField.IsValid() {
-				tracked := fmt.Sprintf("Key: %v, Type: %v, Value: %v\n", keyField, reflect.TypeOf(valueField.Interface()), valueField)
+				tracked := fmt.Sprintf("Name: %v, Type: %v, Value: %v", keyField, reflect.TypeOf(valueField.Interface()), valueField)
 				values = append(values, tracked)
 			}
 

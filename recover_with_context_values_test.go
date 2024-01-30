@@ -35,18 +35,18 @@ func TestRecoverWithContextValues(t *testing.T) {
 	}()
 
 	// Assert the log messages
-	assert.Equal(t, 3, len(mockLogger.logs))
-	assert.Contains(t, mockLogger.String(), "ERROR: test panic")
-	assert.Contains(t, mockLogger.String(), "ERROR: Stacktrace dump ***")
-	assert.Contains(t, mockLogger.String(), "ERROR: Context values dump ***")
+	assert.Equal(t, 6, len(mockLogger.logs))
+	assert.Contains(t, mockLogger.String(), "test panic")
+	assert.Contains(t, mockLogger.String(), "Stacktrace ***")
+	assert.Contains(t, mockLogger.String(), "Context values ***")
 
 	// First value
-	assert.Contains(t, mockLogger.String(), "Key: an string")
+	assert.Contains(t, mockLogger.String(), "Name: an string")
 	assert.Contains(t, mockLogger.String(), "Type: string")
 	assert.Contains(t, mockLogger.String(), "Value: an value")
 
 	// Second value
-	assert.Contains(t, mockLogger.String(), "Key: an struct")
+	assert.Contains(t, mockLogger.String(), "Name: an struct")
 	assert.Contains(t, mockLogger.String(), "Type: recoverich.Car")
 	assert.Contains(t, mockLogger.String(), "Value: {red}")
 

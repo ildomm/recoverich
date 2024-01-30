@@ -1,30 +1,31 @@
 package recoverich
 
 import (
-	"errors"
-	"fmt"
+	errors "github.com/go-errors/errors"
 	"log"
-	"runtime"
 )
 
-const stackTraceMaxSize = 64 << 10
+// standard wrap the error with a stack trace using go-errors,
+// and custom format of the stack trace
+func print(err interface{}) {
+	e := errors.Wrap(err, 0)
+	s := e.ErrorStack()
+
+	log.Printf("Recovered from panic: %v", e)
+	log.Printf("Stacktrace ***\n %s \n*** \n", s)
+}
+
+// printPile prints the pre-formatted list of values
+func printPile(values []string) {
+	for _, value := range values {
+		log.Printf("%v \n", value)
+	}
+}
 
 // Recover recovers from a panic and logs the error and stack trace.
 // This is the most basic version of Recover.
 func Recover() {
 	if err := recover(); err != nil {
-
-		stackTrace := make([]byte, stackTraceMaxSize)
-		stackTrace = stackTrace[:runtime.Stack(stackTrace, false)]
-
-		switch x := err.(type) {
-		case string:
-			err = errors.New(x)
-		default:
-			err = fmt.Errorf("unknown panic: %w", x.(error))
-		}
-
-		log.Printf("ERROR: %v", err)
-		log.Printf("ERROR: Stacktrace dump ***\n%s\n*** end\n", stackTrace)
+		print(err)
 	}
 }
